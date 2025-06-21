@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'sub_jabatan',
     ];
 
     /**
@@ -41,4 +43,44 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function suratMasuk()
+    {
+        return $this->hasMany(SuratMasuk::class, 'created_by_id');
+    }
+
+    public function suratKeluar()
+    {
+        return $this->hasMany(SuratKeluar::class, 'created_by_id');
+    }
+
+    public function memoInternal()
+    {
+        return $this->hasMany(MemoInternal::class, 'created_by_id');
+    }
+
+    public function disposisiPengirim()
+    {
+        return $this->hasMany(Disposisi::class, 'pengirim_id');
+    }
+
+    public function disposisiPenerima()
+    {
+        return $this->hasMany(Disposisi::class, 'penerima_id');
+    }
+
+    public function disposisiMemoPengirim()
+    {
+        return $this->hasMany(DisposisiMemo::class, 'pengirim_id');
+    }
+
+    public function disposisiMemoPenerima()
+    {
+        return $this->hasMany(DisposisiMemo::class, 'penerima_id');
+    }
+
+    public function dokumenTimelines()
+    {
+        return $this->hasMany(DokumenTimeline::class);
+    }
 }
